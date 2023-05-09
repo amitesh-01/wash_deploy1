@@ -1,8 +1,35 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { motion } from "framer-motion";
 import "../App.css";
+import { useState, useEffect } from "react";
 
 function Entry(props) {
+  const [data, setData] = useState({ 'type': props.type });
+
+  useEffect(() => {
+    setData({ 'type': props.type });
+  }, [props.type]);
+
+  const handler = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+      const response = await fetch("http://localhost:5000/cart", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+  };
+
   return (
     <motion.div
       animate={{ opacity: props.open ? 1 : 0 }}
@@ -26,7 +53,7 @@ function Entry(props) {
             ></button>
           </div>
           <div className="modal-body">
-            <form method="post" action="/cart" id="cart">
+            <form id="cart" onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label for="cloth-color" className="col-form-label">
                   Color of Your Cloth:
@@ -36,6 +63,7 @@ function Entry(props) {
                   className="form-control shadow"
                   id="cloth-color"
                   name="color"
+                  onChange={handler}
                   required
                 />
               </div>
@@ -48,6 +76,7 @@ function Entry(props) {
                   className="form-control shadow"
                   id="select-service"
                   name="category"
+                  onChange={handler}
                   required
                 />
               </div>
@@ -59,23 +88,24 @@ function Entry(props) {
                   className="form-control shadow"
                   id="message-text"
                   name="detail"
+                  onChange={handler}
                 ></textarea>
               </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <input
+                  type="submit"
+                  className="btn btn-primary m-3"
+                  name="Send message"
+                />
+              </div>
             </form>
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <input
-              type="submit"
-              className="btn btn-primary m-3"
-              name="Send message"
-            />
           </div>
         </div>
       </div>

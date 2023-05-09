@@ -11,13 +11,12 @@ import { useState } from "react";
 function Index(props) {
   const [loc, setLoc] = useState("");
   const [style, setStyle] = useState({});
-    const [open, setOpen] = useState(false);
-    
-    setTimeout(() => {
-        console.log(props.data)
-    }, 5000);
-    
-  const newPage = () => {
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState();
+  console.log(props.data);
+
+  const newPage = (e) => {
+    setType(e.target.name);
     setOpen(true);
     setStyle({
       filter: "blur(8px)",
@@ -139,7 +138,6 @@ function Index(props) {
               search
             </button>
           </form>
-          {Object.keys(props.data).length ? "a" : "b"}
           <button
             type="button"
             style={{ margin: "0 0 0 15px" }}
@@ -147,11 +145,20 @@ function Index(props) {
             onClick={() => (window.location.pathname = "/login")}
           >
             Log in
+                  </button>
+                  
+                  <button
+            type="button"
+            style={{ margin: "0 0 0 15px" }}
+            className="btn btn-outline-primary"
+            onClick={() => (window.location.pathname = "/cart")}
+          >
+            Cart
           </button>
         </div>
       </nav>
 
-      <Entry open={open} setOpen={setOpen} setStyle={setStyle} />
+      <Entry open={open} setOpen={setOpen} setStyle={setStyle} type={type} />
       <div style={style}>
         <div className="container">
           <Swiper />
@@ -228,6 +235,7 @@ function Index(props) {
                     className="btn btn-outline-primary"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
+                    name="iron"
                     onClick={newPage}
                   >
                     Add Details
@@ -250,6 +258,8 @@ function Index(props) {
                     type="button"
                     id="click-me"
                     className="btn btn-outline-primary"
+                    name="dry clean"
+                    onClick={newPage}
                   >
                     Add Details
                   </button>
@@ -267,7 +277,12 @@ function Index(props) {
                     itaque? Alias, voluptate veniam. Corporis eum consequuntur
                     deserunt doloribus quasi id voluptatibus, labore officiis!
                   </p>
-                  <button type="button" className="btn btn-outline-primary">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    name="wash"
+                    onClick={newPage}
+                  >
                     Add Details
                   </button>
                 </div>

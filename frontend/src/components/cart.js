@@ -1,41 +1,50 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
-import Swiper from "./Swiper";
+import { useState,useEffect } from "react";
 
 function Cart() {
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await fetch("http://localhost:5000/cart", {
+        method: "GET",
+      });
+      const result = await response.json();
+      setUser(result);
+    };
+    getUser();
+  }, []);
+
+  let counter = 1;
+
   return (
-    <div>
+    <div className="m-5">
       <h1 className="text-center">Your Cart</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>Sr.no</th>
+            <th>Type</th>
+            <th>Color</th>
+            <th>Category</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan={2}>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
+        {
+          user.map((val, key) => {
+          return (
+            <tbody key={key}>
+              <tr>
+                <td>{ counter}</td>
+                <td>{val.type }</td>
+                <td>{val.color }</td>
+                <td>{val.category }</td>
+              </tr>
+            </tbody>
+            );
+            counter++;
+        })}
       </Table>
-      <Swiper />
     </div>
   );
 }
