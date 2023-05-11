@@ -4,6 +4,9 @@ import { useState,useEffect } from "react";
 
 function Cart() {
   const [user, setUser] = useState([]);
+  let count = 0;
+
+  const name = JSON.parse(localStorage.getItem('username'));
 
   useEffect(() => {
     const getUser = async () => {
@@ -16,10 +19,9 @@ function Cart() {
     getUser();
   }, []);
 
-  let counter = 1;
-
   return (
-    <div className="m-5">
+    
+    < div className = "m-5" >
       <h1 className="text-center">Your Cart</h1>
       <Table striped bordered hover>
         <thead>
@@ -32,20 +34,26 @@ function Cart() {
         </thead>
         {
           user.map((val, key) => {
-          return (
-            <tbody key={key}>
-              <tr>
-                <td>{ counter}</td>
-                <td>{val.type }</td>
-                <td>{val.color }</td>
-                <td>{val.category }</td>
-              </tr>
-            </tbody>
-            );
-            counter++;
+            if (val.name == name) {
+              count++;
+              return (
+                <tbody key={key}>
+                  <tr>
+                    <td>{count}</td>
+                    <td>{val.type}</td>
+                    <td>{val.color}</td>
+                    <td>{val.category}</td>
+                  </tr>
+                </tbody>
+              );
+            }
         })}
       </Table>
-    </div>
+      { count ?
+        <button className="btn btn-outline-success">Procced</button>
+        : <h1>Empty </h1>
+      }
+    </div >
   );
 }
 

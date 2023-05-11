@@ -1,10 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import img from "../img/login-img.svg";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [data, setData] = useState({});
   const [user, setUser] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
@@ -114,7 +117,7 @@ function Register() {
                         <input
                           type="submit"
                           name="signupsubmit"
-                          className="form-control btn btn-outline-primary mt-4"
+                          className="form-control btn btn-outline-success mt-4"
                         />
                       </div>
                     </div>
@@ -122,18 +125,19 @@ function Register() {
                   <div>
                     <button
                       onClick={() => (window.location.pathname = "/login")}
-                      className="btn btn-outline-primary"
+                      className="btn btn-outline-primary m-1"
                     >
                       Login
                     </button>
 
                     <button
                       onClick={() => (window.location.pathname = "/")}
-                      className="btn btn-outline-primary"
+                      className="btn btn-outline-primary m-1"
                     >
                       Index
                     </button>
                   </div>
+                  <br/>
                 </div>
                 <div className="col-md-6">
                   <div>
@@ -144,6 +148,7 @@ function Register() {
             </div>
           </div>
         </div>
+        
       </section>
     </div>
   );

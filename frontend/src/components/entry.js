@@ -4,11 +4,23 @@ import "../App.css";
 import { useState, useEffect } from "react";
 
 function Entry(props) {
-  const [data, setData] = useState({ 'type': props.type });
+  const [data, setData] = useState({
+    'type': props.type,
+    'name': props.name,
+    'color': '',
+    'category': '',
+    'detail':'',
+  });
 
   useEffect(() => {
-    setData({ 'type': props.type });
-  }, [props.type]);
+    setData({
+      'type': props.type,
+    'name': props.name,
+    'color': '',
+    'category': '',
+    'detail':'',
+    });
+  }, [props.type,props.name]);
 
   const handler = (e) => {
     setData({
@@ -26,8 +38,14 @@ function Entry(props) {
           "Content-Type": "application/json",
         },
       });
+      setData({
+        'type': props.type,
+      'name': props.name,
+      'color': '',
+      'category': '',
+      'detail':'',
+      });
       const result = await response.json();
-      console.log(result);
   };
 
   return (
@@ -63,6 +81,7 @@ function Entry(props) {
                   className="form-control shadow"
                   id="cloth-color"
                   name="color"
+                  value={data.color}
                   onChange={handler}
                   required
                 />
@@ -76,6 +95,7 @@ function Entry(props) {
                   className="form-control shadow"
                   id="select-service"
                   name="category"
+                  value={data.category}
                   onChange={handler}
                   required
                 />
@@ -89,6 +109,7 @@ function Entry(props) {
                   id="message-text"
                   name="detail"
                   onChange={handler}
+                  value={data.detail}
                 ></textarea>
               </div>
               <div className="modal-footer">

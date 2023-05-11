@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
 });
 
 const userSchema1 = new mongoose.Schema({
+    name:String,
     type:String,
     color:String,
     category: String,
@@ -52,12 +53,12 @@ app.get('/show', async (req,res)=> {
 
 app.post('/cart', async (req, res) => {
     const cart = new Cart;
+    cart.name = req.body.name;
     cart.type = req.body.type;
     cart.color = req.body.color;
     cart.category = req.body.category;
     cart.details = req.body.detail;
     const doc = await cart.save();
-    console.log(doc);
     res.json(doc);
 })
 

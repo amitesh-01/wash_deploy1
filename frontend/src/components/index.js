@@ -13,7 +13,8 @@ function Index(props) {
   const [style, setStyle] = useState({});
   const [open, setOpen] = useState(false);
   const [type, setType] = useState();
-  console.log(props.data);
+
+  const name = JSON.parse(localStorage.getItem('username'));
 
   const newPage = (e) => {
     setType(e.target.name);
@@ -30,7 +31,6 @@ function Index(props) {
       maximumAge: 0,
     };
     const success = (position) => {
-      console.log(position);
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       const accuracy = position.coords.accuracy;
@@ -128,25 +128,32 @@ function Index(props) {
               </li>
             </ul>
           </div>
-          <form className="d-flex">
-            <input
-              type="text"
-              placeholder="search here"
-              className="form-control me-2"
-            />
-            <button type="submit" className="btn btn-outline-primary">
-              search
+          
+          {Object.keys(name).length ?
+            <>
+            <span
+              className="username"
+            > <h5>{name}</h5></span>
+            <button
+              type="button"
+              style={{ margin: "0 0 0 15px" }}
+              className="btn btn-outline-primary"
+                onClick={() => {
+                  props.setData('');
+                  window.location.pathname = "/login"
+                }}
+              > Log Out</button>
+              </>
+            :
+            <button
+              type="button"
+              style={{ margin: "0 0 0 15px" }}
+              className="btn btn-outline-primary"
+              onClick={() => (window.location.pathname = "/login")}
+            >
+              Log in
             </button>
-          </form>
-          <button
-            type="button"
-            style={{ margin: "0 0 0 15px" }}
-            className="btn btn-outline-primary"
-            onClick={() => (window.location.pathname = "/login")}
-          >
-            Log in
-                  </button>
-                  
+          }
                   <button
             type="button"
             style={{ margin: "0 0 0 15px" }}
@@ -158,7 +165,7 @@ function Index(props) {
         </div>
       </nav>
 
-      <Entry open={open} setOpen={setOpen} setStyle={setStyle} type={type} />
+      <Entry open={open} setOpen={setOpen} setStyle={setStyle} type={type} name={name} />
       <div style={style}>
         <div className="container">
           <Swiper />

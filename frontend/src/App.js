@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import { useRef } from 'react';
 import './App.css';
 import Login from './components/login';
 import Register from './components/register';
@@ -6,11 +6,24 @@ import Index from './components';
 import Cart from './components/cart';
 import Entry from './components/entry';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 function App() {
 
-  const [data, setData] = useState({});
+  const getLocalItems = () => {
+    let name = localStorage.getItem('username');
+    
+    if (name) {
+      return JSON.parse(localStorage.getItem('username'));
+    }
+    else return "";
+  }
+
+  const [data, setData] = useState(getLocalItems());
+
+  useEffect(() => {
+    localStorage.setItem('username', JSON.stringify(data));
+  }, [data]);
 
   return (
     <div className="App">
@@ -18,7 +31,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login setData={setData} data={data} />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/' element={<Index data={data} />} />
+          <Route path='/' element={<Index data={data} setData={setData} />} />
           <Route path='/cart' element={<Cart />} />
         </Routes>
       </BrowserRouter>

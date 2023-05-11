@@ -1,10 +1,20 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import img from "../img/login-img.svg";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [user, setUser] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setData({
+      'username': '',
+      'password':''
+    })
+  }, []);
 
   useEffect(() => {
     const getUser = async () => {
@@ -28,21 +38,26 @@ function Login(props) {
     e.preventDefault();
       let flag = false;
       user.map((val, key) => {
-        console.log(val.username, val.password);
         if (data.username == val.username) {
+          console.log(data.username, ' ', val.username);
+          console.log(data.password, ' ', val.password);
           if (data.password == val.password) {
-            props.setData({ 1: 2 });
-            console.log(props.data);
+            props.setData(val.username);
+            setData({
+              'username': '',
+              'password':''
+            })
             flag = true;
           }
         }
       });
       if (flag) {
-        window.location.pathname = "/";
+        window.location.pathname = '/';
       } else {
         window.alert("Invalid Credentials");
       }
   };
+
   return (
     <div className="Login">
       <section className="d-flex flex-column min-vh-100 justify-content-center algin-items-center">
@@ -70,6 +85,7 @@ function Login(props) {
                         name="username"
                         type="text"
                         id="username"
+                        value={data.username}
                         onChange={handler}
                         required
                       />
@@ -83,6 +99,7 @@ function Login(props) {
                         name="password"
                         type="text"
                         id="password"
+                        value={data.password}
                         onChange={handler}
                         required
                       />
@@ -112,7 +129,7 @@ function Login(props) {
                         <input
                           type="submit"
                           name="submit"
-                          className="form-control btn btn-outline-primary mt-4"
+                          className="form-control btn btn-outline-success mt-4"
                         />
                       </div>
                     </div>
@@ -120,14 +137,14 @@ function Login(props) {
                   <div>
                     <button
                       onClick={() => (window.location.pathname = "/register")}
-                      className="btn btn-outline-primary"
+                      className="btn btn-outline-primary m-1"
                     >
                       Register
                     </button>
 
                     <button
                       onClick={() => (window.location.pathname = "/")}
-                      className="btn btn-outline-primary"
+                      className="btn btn-outline-primary m-1"
                     >
                       Index
                     </button>

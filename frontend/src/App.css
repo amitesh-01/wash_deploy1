@@ -24,6 +24,7 @@
   color: white;
 }
 
+
 .App-link {
   color: #61dafb;
 }
@@ -58,4 +59,10 @@
 .modal-content{
   padding: 2vh;
  
+}
+
+.username{
+color:blue;
+margin-right: 1vw;
+align-self: center;
 }
