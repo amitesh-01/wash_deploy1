@@ -17,11 +17,14 @@ function Index(props) {
   const name = JSON.parse(localStorage.getItem('username'));
 
   const newPage = (e) => {
+    if(name){
     setType(e.target.name);
     setOpen(true);
     setStyle({
       filter: "blur(8px)",
     });
+  }
+  else window.location.pathname='/login';
   };
 
   const FindMyLocation = () => {
@@ -129,7 +132,7 @@ function Index(props) {
             </ul>
           </div>
           
-          {Object.keys(name).length ?
+          {name.length ?
             <>
             <span
               className="username"
@@ -202,7 +205,15 @@ function Index(props) {
                     </label>
                     <input type="text" className="form-control shadow-none" />
                   </div>
-
+                  <div className="col-lg-3 mb-3">
+                    <label
+                      className="form-label"
+                      style={{ fontWeight: "500 " }}
+                    >
+                      Select pick up time
+                    </label>
+                    <input type="time" className="form-control shadow-none" />
+                  </div>
                   <div className="col-lg-2 mb-3">
                     <button type="submit" className="btn btn-outline-primary">
                       Request Service

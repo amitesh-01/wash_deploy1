@@ -1,7 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
 import { useState,useEffect } from "react";
-
+import cart_banner from "../img/cart_bannerr.png"
+import "../App.css";
 function Cart() {
   const [user, setUser] = useState([]);
   let count = 0;
@@ -22,7 +23,9 @@ function Cart() {
   return (
     
     < div className = "m-5" >
-      <h1 className="text-center">Your Cart</h1>
+
+      <img src={cart_banner} className="card-img-top m-3 p-3" height={500} width={300} id="cart_ban"/>
+      {/* <h1 className="text-center">Your Cart</h1> */}
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -50,7 +53,7 @@ function Cart() {
         })}
       </Table>
       { count ?
-        <button className="btn btn-outline-success">Procced</button>
+        <button className="btn btn-outline-success">Proceed</button>
         : <h1>Empty </h1>
       }
     </div >
